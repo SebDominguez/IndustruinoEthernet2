@@ -22,7 +22,7 @@
 W5500Class w5500;
 
 // SPI details
-SPISettings wiznet_SPI_settings(8000000, MSBFIRST, SPI_MODE0);
+SPISettings wiznet_SPI_settings(4000000, MSBFIRST, SPI_MODE0);
 uint8_t SPI_CS;
 
 void W5500Class::init(uint8_t ss_pin)
@@ -47,7 +47,7 @@ uint16_t W5500Class::getTXFreeSize(SOCKET s)
         val1 = readSnTX_FSR(s);
         if (val1 != 0)
             val = readSnTX_FSR(s);
-    } 
+    }
     while (val != val1);
     return val;
 }
@@ -59,7 +59,7 @@ uint16_t W5500Class::getRXReceivedSize(SOCKET s)
         val1 = readSnRX_RSR(s);
         if (val1 != 0)
             val = readSnRX_RSR(s);
-    } 
+    }
     while (val != val1);
     return val;
 }
@@ -103,7 +103,7 @@ void W5500Class::read_data(SOCKET s, volatile uint16_t src, volatile uint8_t *ds
 uint8_t W5500Class::write(uint16_t _addr, uint8_t _cb, uint8_t _data)
 {
     SPI.beginTransaction(wiznet_SPI_settings);
-    setSS();  
+    setSS();
     SPI.transfer(_addr >> 8);
     SPI.transfer(_addr & 0xFF);
     SPI.transfer(_cb);
@@ -145,7 +145,7 @@ uint8_t W5500Class::read(uint16_t _addr, uint8_t _cb)
 }
 
 uint16_t W5500Class::read(uint16_t _addr, uint8_t _cb, uint8_t *_buf, uint16_t _len)
-{ 
+{
     SPI.beginTransaction(wiznet_SPI_settings);
     setSS();
     SPI.transfer(_addr >> 8);
